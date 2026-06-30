@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sistema de Estacionamento Profissional</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- Login Page -->
+  <div id="loginPage" class="page active">
+    <div class="login-container">
+      <div class="login-image" style="background-image: url('/estacionamento-html/assets/images/parking-garage-bg.png');"></div>
+      <div class="login-form-wrapper">
+        <div class="login-form">
+          <div class="login-header">
+            <div class="login-logo" style="background-image: url('/estacionamento-html/assets/images/logo-car.png'); background-size: contain; background-repeat: no-repeat; background-position: center;"></div>
+            <h1>Bem-Vindo!</h1>
+            <p>Faça login para acessar o sistema</p>
+          </div>
+
+          <div class="security-message">
+            <span>🛡️</span>
+            <p>Segurança e praticidade para o seu estacionamento</p>
+          </div>
+
+          <form id="loginForm">
+            <div class="input-group">
+              <label for="username">Usuário</label>
+              <input type="text" id="username" placeholder="Digite seu Usuário" required>
+            </div>
+
+            <div class="input-group">
+              <label for="password">Senha</label>
+              <input type="password" id="password" placeholder="Digite sua Senha" required>
+            </div>
+
+            <div class="login-remember">
+              <label>
+                <input type="checkbox" id="rememberMe">
+                Lembrar-me
+              </label>
+              <a href="#" onclick="alert('Funcionalidade em desenvolvimento'); return false;">Esqueci minha senha</a>
+            </div>
+
+            <button type="submit" class="btn btn-primary">ENTRAR</button>
+          </form>
+
+          <div class="login-roles">
+            <p class="login-roles-title">Selecione o perfil:</p>
+            <div class="login-roles-grid">
+              <button type="button" class="role-button active" data-role="funcionario">
+                <span>👤</span>
+                Funcionário
+              </button>
+              <button type="button" class="role-button" data-role="gerente">
+                <span>👨‍💼</span>
+                Gerente
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- App Container -->
+  <div id="appContainer" class="app-container hidden">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-logo">
+        <div class="sidebar-logo-icon" style="background-image: url('/estacionamento-html/assets/images/logo-car.png'); background-size: contain; background-repeat: no-repeat; background-position: center; background-color: var(--parking-yellow);"></div>
+        <span>Estacionamento</span>
+      </div>
+
+      <nav class="sidebar-nav">
+        <li class="sidebar-nav-item">
+          <a href="#" class="sidebar-nav-link active" data-page="dashboard">
+            <span>📊</span>
+            <span>Dashboard</span>
+          </a>
+        </li>
+        <li class="sidebar-nav-item">
+          <a href="#" class="sidebar-nav-link" data-page="entrada">
+            <span>➡️</span>
+            <span>Entrada</span>
+          </a>
+        </li>
+        <li class="sidebar-nav-item">
+          <a href="#" class="sidebar-nav-link" data-page="saida">
+            <span>⬅️</span>
+            <span>Saída</span>
+          </a>
+        </li>
+        <li class="sidebar-nav-item">
+          <a href="#" class="sidebar-nav-link" data-page="vagas">
+            <span>🅿️</span>
+            <span>Vagas</span>
+          </a>
+        </li>
+        <li class="sidebar-nav-item">
+          <a href="#" class="sidebar-nav-link" data-page="relatorios">
+            <span>📈</span>
+            <span>Relatórios</span>
+          </a>
+        </li>
+        <li class="sidebar-nav-item" style="margin-top: var(--spacing-2xl); border-top: 1px solid rgba(255,255,255,0.1); padding-top: var(--spacing-lg);">
+          <a href="#" class="sidebar-nav-link" id="logoutBtn">
+            <span>🚪</span>
+            <span>Sair</span>
+          </a>
+        </li>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <!-- Header -->
+      <header class="header">
+        <h1 class="header-title" id="pageTitle">Dashboard</h1>
+        <div class="header-user">
+          <div class="user-avatar" id="userAvatar">U</div>
+          <span id="userName">Usuário</span>
+        </div>
+      </header>
+
+      <!-- Content Area -->
+      <div class="content">
+        <!-- Dashboard Page -->
+        <div id="dashboardPage" class="page active">
+          <div class="mb-lg">
+            <h1>Início</h1>
+            <p class="text-muted">Bem-vindo, <span id="dashboardUserName">Usuário</span>!</p>
+          </div>
+
+          <div class="grid grid-4">
+            <div class="card-parking">
+              <div class="flex-between">
+                <div>
+                  <p class="text-muted text-sm">Vagas Disponíveis</p>
+                  <p class="text-4xl font-bold text-success" id="availableSpots">0</p>
+                </div>
+                <span style="font-size: 2rem;">🟢</span>
+              </div>
+            </div>
+
+            <div class="card-parking">
+              <div class="flex-between">
+                <div>
+                  <p class="text-muted text-sm">Vagas Ocupadas</p>
+                  <p class="text-4xl font-bold text-danger" id="occupiedSpots">0</p>
+                </div>
+                <span style="font-size: 2rem;">🔴</span>
+              </div>
+            </div>
+
+            <div class="card-parking">
+              <div class="flex-between">
+                <div>
+                  <p class="text-muted text-sm">Vagas PCD</p>
+                  <p class="text-4xl font-bold text-info" id="pcdSpots">0</p>
+                </div>
+                <span style="font-size: 2rem;">♿</span>
+              </div>
+            </div>
+
+            <div class="card-parking" id="revenueCard" style="display: none;">
+              <div class="flex-between">
+                <div>
+                  <p class="text-muted text-sm">Faturamento</p>
+                  <p class="text-4xl font-bold text-warning" id="dailyRevenue">R$ 0</p>
+                </div>
+                <span style="font-size: 2rem;">💰</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-parking mt-lg">
+            <h2>Últimos Registros</h2>
+            <div style="overflow-x: auto;">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Tipo</th>
+                    <th>Placa</th>
+                    <th>Vaga</th>
+                    <th>Data/Hora</th>
+                    <th>Funcionário</th>
+                    <th id="revenueHeader" style="display: none;">Valor</th>
+                  </tr>
+                </thead>
+                <tbody id="recentRecords">
+                  <tr>
+                    <td colspan="6" class="text-center text-muted">Nenhum registro</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Entrada Page -->
+        <div id="entradaPage" class="page">
+          <div class="mb-lg">
+            <h1>Registrar Entrada</h1>
+            <p class="text-muted">Preencha os dados do veículo e selecione uma vaga</p>
+          </div>
+
+          <div class="grid grid-2">
+            <div class="card-parking">
+              <h2>Dados do Veículo</h2>
+              <form id="entradaForm">
+                <div class="input-group">
+                  <label for="entradaPlaca">Placa do Veículo *</label>
+                  <input type="text" id="entradaPlaca" placeholder="ABC-1234" required>
+                  <small class="text-muted">Formato: ABC-1234</small>
+                </div>
+
+                <div class="input-group">
+                  <label for="entradaVaga">Vaga Selecionada *</label>
+                  <div style="padding: var(--spacing-md); background-color: var(--gray-50); border-radius: var(--radius-lg); min-height: 50px; display: flex; align-items: center;">
+                    <span id="entradaVagaSelecionada" class="text-muted">Selecione uma vaga abaixo</span>
+                  </div>
+                </div>
+
+                <div class="input-group">
+                  <label for="entradaObservacao">Observação (opcional)</label>
+                  <textarea id="entradaObservacao" placeholder="Ex: Veículo com dano, cliente VIP, etc."></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Confirmar Entrada</button>
+              </form>
+            </div>
+
+            <div class="card-parking">
+              <h2>Selecionar Vaga</h2>
+              
+              <div style="margin-bottom: var(--spacing-lg); display: flex; gap: var(--spacing-lg); flex-wrap: wrap;">
+                <div class="flex gap-sm">
+                  <div style="width: 20px; height: 20px; background-color: var(--parking-green); border-radius: 4px;"></div>
+                  <small>Disponível</small>
+                </div>
+                <div class="flex gap-sm">
+                  <div style="width: 20px; height: 20px; background-color: rgba(239, 68, 68, 0.7); border-radius: 4px;"></div>
+                  <small>Ocupada</small>
+                </div>
+                <div class="flex gap-sm">
+                  <div style="width: 20px; height: 20px; background-color: var(--parking-blue); border-radius: 4px;"></div>
+                  <small>PCD</small>
+                </div>
+              </div>
+
+              <div id="entradaSpotsGrid" class="parking-spots-grid"></div>
+
+              <div style="margin-top: var(--spacing-lg); padding-top: var(--spacing-lg); border-top: 1px solid var(--gray-200); display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--spacing-md); text-align: center;">
+                <div>
+                  <p class="text-muted text-sm">Disponíveis</p>
+                  <p class="text-2xl font-bold text-success" id="entradaAvailable">0</p>
+                </div>
+                <div>
+                  <p class="text-muted text-sm">Ocupadas</p>
+                  <p class="text-2xl font-bold text-danger" id="entradaOccupied">0</p>
+                </div>
+                <div>
+                  <p class="text-muted text-sm">PCD</p>
+                  <p class="text-2xl font-bold text-info" id="entradaPcd">0</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Saída Page -->
+        <div id="saidaPage" class="page">
+          <div class="mb-lg">
+            <h1>Registrar Saída</h1>
+            <p class="text-muted">Busque o veículo e processe o pagamento</p>
+          </div>
+
+          <div class="grid grid-2">
+            <div class="card-parking">
+              <h2>Buscar Veículo</h2>
+              <form id="saidaBuscaForm">
+                <div class="input-group">
+                  <label for="saidaPlaca">Placa *</label>
+                  <div style="display: flex; gap: var(--spacing-md);">
+                    <input type="text" id="saidaPlaca" placeholder="ABC-1234" required style="flex: 1;">
+                    <button type="submit" class="btn btn-primary">Buscar</button>
+                  </div>
+                </div>
+              </form>
+
+              <div id="saidaVehicleInfo" style="display: none; margin-top: var(--spacing-lg); padding-top: var(--spacing-lg); border-top: 1px solid var(--gray-200);">
+                <div class="mb-lg">
+                  <p class="text-muted text-sm">Placa</p>
+                  <p class="font-bold font-mono text-lg" id="saidaPlacaInfo">-</p>
+                </div>
+                <div class="mb-lg">
+                  <p class="text-muted text-sm">Vaga</p>
+                  <p class="font-bold text-lg" id="saidaVagaInfo">-</p>
+                </div>
+                <div class="mb-lg">
+                  <p class="text-muted text-sm">Entrada</p>
+                  <p class="text-sm" id="saidaEntradaInfo">-</p>
+                </div>
+                <div>
+                  <p class="text-muted text-sm">Permanência</p>
+                  <p class="font-bold text-lg" id="saidaDurationInfo">-</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="card-parking" id="saidaPagamentoCard" style="display: none;">
+              <h2>Pagamento</h2>
+              <form id="saidaPagamentoForm">
+                <div class="input-group">
+                  <label>Valor a Pagar (R$)</label>
+                  <div style="padding: var(--spacing-md); background-color: var(--gray-50); border-radius: var(--radius-lg); text-align: center;">
+                    <p class="text-4xl font-bold text-success" id="saidaValor">0,00</p>
+                  </div>
+                </div>
+
+                <div class="input-group">
+                  <label for="saidaMetodo">Forma de Pagamento</label>
+                  <select id="saidaMetodo">
+                    <option value="dinheiro">💵 Dinheiro</option>
+                    <option value="cartao">💳 Cartão</option>
+                    <option value="pix">📱 PIX</option>
+                  </select>
+                </div>
+
+                <div class="input-group" id="saidaRecebidoGroup">
+                  <label for="saidaRecebido">Valor Recebido (R$) *</label>
+                  <input type="number" id="saidaRecebido" placeholder="Ex: 20,00" step="0.01" min="0">
+                </div>
+
+                <div class="input-group" id="saidaTrocoGroup" style="display: none;">
+                  <label>Troco (R$)</label>
+                  <div style="padding: var(--spacing-md); background-color: var(--gray-50); border-radius: var(--radius-lg); text-align: center;">
+                    <p class="text-2xl font-bold text-success" id="saidaTroco">0,00</p>
+                  </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="width: 100%;">Confirmar Saída</button>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <!-- Vagas Page -->
+        <div id="vagasPage" class="page">
+          <div class="flex-between mb-lg">
+            <div>
+              <h1>Controle de Vagas</h1>
+              <p class="text-muted">Visualize o status de todas as vagas em tempo real</p>
+            </div>
+            <button class="btn btn-secondary" id="refreshVagasBtn">🔄 Atualizar</button>
+          </div>
+
+          <div class="grid grid-3">
+            <div class="card-parking">
+              <p class="text-muted text-sm">Vagas Disponíveis</p>
+              <p class="text-4xl font-bold text-success" id="vagasAvailable">0</p>
+              <small class="text-muted">Prontas para uso</small>
+            </div>
+
+            <div class="card-parking">
+              <p class="text-muted text-sm">Vagas Ocupadas</p>
+              <p class="text-4xl font-bold text-danger" id="vagasOccupied">0</p>
+              <small class="text-muted">Veículos estacionados</small>
+            </div>
+
+            <div class="card-parking">
+              <p class="text-muted text-sm">Vagas PCD</p>
+              <p class="text-4xl font-bold text-info" id="vagasPcd">0</p>
+              <small class="text-muted">Pessoas com deficiência</small>
+            </div>
+          </div>
+
+          <div class="card-parking mt-lg">
+            <h2>Grid de Vagas</h2>
+            
+            <div style="margin-bottom: var(--spacing-lg); display: flex; gap: var(--spacing-lg); flex-wrap: wrap;">
+              <div class="flex gap-sm">
+                <div style="width: 20px; height: 20px; background-color: var(--parking-green); border-radius: 4px;"></div>
+                <small>Disponível</small>
+              </div>
+              <div class="flex gap-sm">
+                <div style="width: 20px; height: 20px; background-color: rgba(239, 68, 68, 0.7); border-radius: 4px;"></div>
+                <small>Ocupada</small>
+              </div>
+              <div class="flex gap-sm">
+                <div style="width: 20px; height: 20px; background-color: var(--parking-blue); border-radius: 4px;"></div>
+                <small>PCD</small>
+              </div>
+            </div>
+
+            <div id="vagasGrid" class="parking-spots-grid"></div>
+          </div>
+
+          <div class="card-parking mt-lg" id="vagasOccupiedList" style="display: none;">
+            <h2>Veículos Estacionados</h2>
+            <div id="occupiedVehiclesList" class="grid grid-3"></div>
+          </div>
+        </div>
+
+        <!-- Relatórios Page -->
+        <div id="relatoriosPage" class="page">
+          <div class="flex-between mb-lg">
+            <div>
+              <h1>Relatórios</h1>
+              <p class="text-muted">Visualize o histórico completo de operações</p>
+            </div>
+            <button class="btn btn-secondary" id="exportCsvBtn">📥 Exportar CSV</button>
+          </div>
+
+          <div class="grid grid-4">
+            <div class="card-parking">
+              <p class="text-muted text-sm">Total de Registros</p>
+              <p class="text-4xl font-bold" id="relTotalRecords">0</p>
+            </div>
+
+            <div class="card-parking">
+              <p class="text-muted text-sm">Entradas</p>
+              <p class="text-4xl font-bold text-success" id="relEntradas">0</p>
+            </div>
+
+            <div class="card-parking">
+              <p class="text-muted text-sm">Saídas</p>
+              <p class="text-4xl font-bold text-danger" id="relSaidas">0</p>
+            </div>
+
+            <div class="card-parking" id="relRevenueCard" style="display: none;">
+              <p class="text-muted text-sm">Faturamento</p>
+              <p class="text-4xl font-bold text-warning" id="relRevenue">R$ 0</p>
+            </div>
+          </div>
+
+          <div class="card-parking mt-lg">
+            <div style="margin-bottom: var(--spacing-lg); display: flex; gap: var(--spacing-md); align-items: center;">
+              <span>🔍</span>
+              <select id="relFiltro" style="flex: 1; max-width: 300px;">
+                <option value="all">Todos os registros</option>
+                <option value="entrada">Apenas entradas</option>
+                <option value="saida">Apenas saídas</option>
+              </select>
+            </div>
+
+            <div style="overflow-x: auto;">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Tipo</th>
+                    <th>Placa</th>
+                    <th>Vaga</th>
+                    <th>Data/Hora</th>
+                    <th>Funcionário</th>
+                    <th id="relValorHeader" style="display: none;">Valor</th>
+                    <th id="relMetodoHeader" style="display: none;">Método</th>
+                  </tr>
+                </thead>
+                <tbody id="relatoriosTable">
+                  <tr>
+                    <td colspan="7" class="text-center text-muted">Nenhum registro</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/app.js"></script>
+</body>
+</html>
